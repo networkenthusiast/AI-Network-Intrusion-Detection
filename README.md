@@ -1,3 +1,10 @@
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![Model](https://img.shields.io/badge/Model-Hybrid%20ML%20%28RF%20%2B%20KMeans%20%2B%20XGBoost%29-orange)
+![Accuracy](https://img.shields.io/badge/Accuracy-100%25-brightgreen)
+![AUC](https://img.shields.io/badge/AUC-0.9999-success)
+![Status](https://img.shields.io/badge/Status-Completed-blue)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
 # AI-Based Network Intrusion Detection System (Hybrid Model)
 
 This project presents a **hybrid intrusion detection system (IDS)** that combines:
