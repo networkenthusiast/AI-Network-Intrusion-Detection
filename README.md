@@ -14,8 +14,6 @@ The goal is to improve detection performance by leveraging both **labeled patter
 
 The complete implementation is available in the notebook:
 
-👉 :contentReference[oaicite:0]{index=0}
-
 The project follows a **multi-stage machine learning pipeline**:
 
 1. Data preprocessing & feature selection  
@@ -62,22 +60,18 @@ Generated features:
 
 ## ⚙️ Pipeline Flow
 
-Raw Data
-↓
-Preprocessing
-↓
-Random Forest → rf_pred, rf_prob
-↓
-K-Means → cluster features
-↓
-Feature Aggregation
-↓
-XGBoost (Final Model)
-
+Raw Data → Preprocessing → Random Forest → K-Means → Feature Aggregation → XGBoost (Final Model)
 
 ---
 
 ## 📊 Results Summary
+
+### Random Forest Decision tree (Supervised)
+
+- Accuracy: ~99%
+- AUC: ~0.99
+- High recall for benign traffic
+- High recall for attack class
 
 ### K-Means (Unsupervised)
 
@@ -180,7 +174,8 @@ pip install -r requirements.txt
 
 Kalyan Brata Majumder <br>
 Karthik Mekala<br>
-MS-Applied AI
+
+Curriculum - MS-Applied AI
 
 ---
 
