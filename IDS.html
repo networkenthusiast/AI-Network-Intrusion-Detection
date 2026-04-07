@@ -11361,6 +11361,154 @@ weighted avg       1.00      1.00      1.00    112999
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1c9c3a42">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Limitations-and-Future-Scope-of-the-Hybrid-Intrusion-Detection-Model">Limitations and Future Scope of the Hybrid Intrusion Detection Model<a class="anchor-link" href="#Limitations-and-Future-Scope-of-the-Hybrid-Intrusion-Detection-Model">¶</a></h1><h2 id="Limitations">Limitations<a class="anchor-link" href="#Limitations">¶</a></h2><h3 id="1.-Risk-of-Data-Leakage">1. Risk of Data Leakage<a class="anchor-link" href="#1.-Risk-of-Data-Leakage">¶</a></h3><p>The hybrid architecture integrates outputs from multiple models (Random Forest and K-Means), which increases the risk of unintended data leakage if the pipeline is not strictly separated between training and testing phases.</p>
+<ul>
+<li>Features such as <code>rf_prob</code> and clustering outputs may inadvertently carry label information</li>
+<li>Improper sequencing of preprocessing, feature engineering, and splitting can lead to overly optimistic performance</li>
+</ul>
+<p>This makes careful pipeline design and validation essential.</p>
+<hr/>
+<h3 id="2.-Dependence-on-Engineered-Features">2. Dependence on Engineered Features<a class="anchor-link" href="#2.-Dependence-on-Engineered-Features">¶</a></h3><p>The performance of the final model is highly dependent on:</p>
+<ul>
+<li>Random Forest probability outputs</li>
+<li>Clustering-based distance features</li>
+</ul>
+<p>This creates a dependency where:</p>
+<ul>
+<li>If upstream models are biased or incorrectly trained, errors propagate to the final model</li>
+<li>The model may rely heavily on derived features rather than raw data patterns</li>
+</ul>
+<hr/>
+<h3 id="3.-Limited-Interpretability">3. Limited Interpretability<a class="anchor-link" href="#3.-Limited-Interpretability">¶</a></h3><p>The hybrid model combines:</p>
+<ul>
+<li>Ensemble learning (Random Forest, XGBoost)</li>
+<li>Unsupervised clustering (K-Means)</li>
+</ul>
+<p>This results in:</p>
+<ul>
+<li>Reduced transparency in decision-making</li>
+<li>Difficulty in explaining predictions in real-world deployment scenarios</li>
+</ul>
+<hr/>
+<h3 id="4.-Sensitivity-to-Data-Distribution">4. Sensitivity to Data Distribution<a class="anchor-link" href="#4.-Sensitivity-to-Data-Distribution">¶</a></h3><ul>
+<li>The model is trained on a specific dataset with particular traffic patterns</li>
+<li>It may not generalize well to:<ul>
+<li>New types of attacks</li>
+<li>Evolving network behaviors</li>
+<li>Different network environments</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h3 id="5.-Computational-Complexity">5. Computational Complexity<a class="anchor-link" href="#5.-Computational-Complexity">¶</a></h3><p>The pipeline involves multiple stages:</p>
+<ul>
+<li>Feature scaling and PCA</li>
+<li>Clustering (MiniBatch K-Means)</li>
+<li>Random Forest training</li>
+<li>XGBoost with hyperparameter tuning</li>
+</ul>
+<p>This increases:</p>
+<ul>
+<li>Training time</li>
+<li>Resource requirements</li>
+<li>Complexity of deployment</li>
+</ul>
+<hr/>
+<h3 id="6.-Imbalanced-Dataset-Challenges">6. Imbalanced Dataset Challenges<a class="anchor-link" href="#6.-Imbalanced-Dataset-Challenges">¶</a></h3><p>Although sampling techniques are applied:</p>
+<ul>
+<li>Real-world network traffic remains highly imbalanced</li>
+<li>Rare attack types may still be underrepresented</li>
+<li>Model performance may degrade for minority attack classes</li>
+</ul>
+<hr/>
+<h2 id="Future-Scope">Future Scope<a class="anchor-link" href="#Future-Scope">¶</a></h2><h3 id="1.-Leakage-Free-End-to-End-Pipeline">1. Leakage-Free End-to-End Pipeline<a class="anchor-link" href="#1.-Leakage-Free-End-to-End-Pipeline">¶</a></h3><ul>
+<li>Implement a fully integrated pipeline using tools like <code>Pipeline</code> and <code>ColumnTransformer</code></li>
+<li>Ensure strict separation between training and testing phases</li>
+<li>Apply transformations (RF, clustering) within cross-validation folds</li>
+</ul>
+<hr/>
+<h3 id="2.-Advanced-Ensemble-Techniques">2. Advanced Ensemble Techniques<a class="anchor-link" href="#2.-Advanced-Ensemble-Techniques">¶</a></h3><ul>
+<li>Explore stacking and blending strategies with multiple base models</li>
+<li>Incorporate additional learners such as:<ul>
+<li>LightGBM</li>
+<li>CatBoost</li>
+<li>Neural networks</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h3 id="3.-Deep-Learning-Based-Approaches">3. Deep Learning-Based Approaches<a class="anchor-link" href="#3.-Deep-Learning-Based-Approaches">¶</a></h3><ul>
+<li>Use architectures such as:<ul>
+<li>Autoencoders for anomaly detection</li>
+<li>LSTM/GRU for temporal network traffic analysis</li>
+</ul>
+</li>
+<li>Capture sequential and temporal dependencies in network flows</li>
+</ul>
+<hr/>
+<h3 id="4.-Real-Time-Intrusion-Detection">4. Real-Time Intrusion Detection<a class="anchor-link" href="#4.-Real-Time-Intrusion-Detection">¶</a></h3><ul>
+<li>Extend the model for streaming data processing</li>
+<li>Deploy using frameworks such as:<ul>
+<li>Apache Kafka</li>
+<li>Apache Spark Streaming</li>
+</ul>
+</li>
+</ul>
+<p>This would enable real-time threat detection.</p>
+<hr/>
+<h3 id="5.-Improved-Feature-Engineering">5. Improved Feature Engineering<a class="anchor-link" href="#5.-Improved-Feature-Engineering">¶</a></h3><ul>
+<li>Incorporate domain-specific network features</li>
+<li>Use feature selection techniques such as:<ul>
+<li>SHAP (for interpretability)</li>
+<li>Mutual information</li>
+</ul>
+</li>
+<li>Explore graph-based representations of network traffic</li>
+</ul>
+<hr/>
+<h3 id="6.-Handling-Concept-Drift">6. Handling Concept Drift<a class="anchor-link" href="#6.-Handling-Concept-Drift">¶</a></h3><ul>
+<li>Implement adaptive learning techniques</li>
+<li>Periodically retrain models using new data</li>
+<li>Detect and adjust to changes in network behavior over time</li>
+</ul>
+<hr/>
+<h3 id="7.-Explainability-and-Model-Transparency">7. Explainability and Model Transparency<a class="anchor-link" href="#7.-Explainability-and-Model-Transparency">¶</a></h3><ul>
+<li>Use explainable AI techniques such as:<ul>
+<li>SHAP values</li>
+<li>LIME</li>
+</ul>
+</li>
+</ul>
+<p>This will improve trust and usability in security applications.</p>
+<hr/>
+<h3 id="8.-Multi-Class-Intrusion-Detection">8. Multi-Class Intrusion Detection<a class="anchor-link" href="#8.-Multi-Class-Intrusion-Detection">¶</a></h3><ul>
+<li>Extend the binary classification (Benign vs Attack) to multi-class classification</li>
+<li>Identify specific attack types such as:<ul>
+<li>DoS</li>
+<li>PortScan</li>
+<li>Botnet</li>
+<li>Web Attacks</li>
+</ul>
+</li>
+</ul>
+<hr/>
+<h3 id="9.-Robust-Evaluation-Framework">9. Robust Evaluation Framework<a class="anchor-link" href="#9.-Robust-Evaluation-Framework">¶</a></h3><ul>
+<li>Use cross-dataset validation</li>
+<li>Test on unseen real-world datasets</li>
+<li>Evaluate robustness under adversarial conditions</li>
+</ul>
+<hr/>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h2><p>While the hybrid model demonstrates strong predictive performance by combining supervised and unsupervised learning, it introduces challenges related to complexity, interpretability, and potential data leakage. Addressing these limitations through improved pipeline design, advanced modeling techniques, and real-world validation will enhance the robustness and applicability of the intrusion detection system.</p>
+</div>
+</div>
+</div>
+</div>
 </main>
 </body>
 </html>
