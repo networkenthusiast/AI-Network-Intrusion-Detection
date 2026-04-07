@@ -178,8 +178,8 @@ pip install -r requirements.txt
 
 ## 👨‍💻 Author
 
-Kalyan Brata Majumder
-Karthik Mekala
+Kalyan Brata Majumder <br>
+Karthik Mekala<br>
 MS-Applied AI
 
 ---
